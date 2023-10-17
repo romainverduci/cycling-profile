@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { UserPage } from "./UserPage";
 import OAuth2Login from "react-simple-oauth2-login";
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 const STRAVA_CLIENT_ID = import.meta.env.VITE_STRAVA_CLIENT_ID;
 const STRAVA_CLIENT_SECRET = import.meta.env.VITE_STRAVA_CLIENT_SECRET;
@@ -57,6 +58,7 @@ function App() {
           scope="read"
           onSuccess={(code: any) => onSuccess(code)}
           onFailure={onFailure}
+          render={(props) => <Button onClick={props.onClick}>Connect your Strava</Button>}
         />
       )}
 
