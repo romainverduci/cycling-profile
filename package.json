@@ -20,7 +20,6 @@
     "@types/react-simple-oauth2-login": "^0.5.2",
     "i18next": "^23.6.0",
     "i18next-browser-languagedetector": "^7.1.0",
-    "i18next-http-backend": "^2.2.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-country-flag": "^3.1.0",

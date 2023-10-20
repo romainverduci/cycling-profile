@@ -1,0 +1,10 @@
+{
+  "common": {
+    "login-page": {
+      "connect-your-strava": "Connecte ton Strava"
+    },
+    "username": {
+      "hi": "Salut {{name}} !"
+    }
+  }
+}
