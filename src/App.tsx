@@ -5,14 +5,8 @@ import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { UserPage } from "./UserPage";
 import OAuth2Login from "react-simple-oauth2-login";
-import { useMemo, useState } from "react";
-import {
-  Button,
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-  useMediaQuery,
-} from "@mui/material";
+import { useState } from "react";
+import { Button, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Layout } from "./Layout";
 import { useTranslation } from "react-i18next";
 
@@ -56,21 +50,15 @@ function App() {
       .catch(setError);
   const onFailure = (response: any) => console.error(response);
 
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? "dark" : "light",
-        },
-      }),
-    [prefersDarkMode]
-  );
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline enableColorScheme />
         {error && (
           <div className="ErrorAlert">{error && (error as any).message}</div>
