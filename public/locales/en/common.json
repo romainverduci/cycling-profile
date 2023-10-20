@@ -1,0 +1,8 @@
+{
+  "login-page": {
+    "connect-your-strava": "Connect your Strava"
+  },
+  "username": {
+    "hi": "Hi {{name}} !"
+  }
+}

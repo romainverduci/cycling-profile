@@ -1,6 +1,7 @@
 import Typography from "@mui/material/Typography";
 import { Athlete } from "./types";
 import { SxProps, Theme } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next';
 
 interface UserNameProps {
   athlete: Athlete;
@@ -8,5 +9,6 @@ interface UserNameProps {
 }
 
 export const UserName = ({ athlete, ...otherProps }: UserNameProps) => {
-  return <Typography variant="h3" {...otherProps}>{`${athlete.firstname} ${athlete.lastname}`}</Typography>;
+  const { t } = useTranslation('common', {keyPrefix: 'username'});
+  return <Typography variant="h3" {...otherProps}>{t('hi', {name: athlete.firstname})}</Typography>;
 };
