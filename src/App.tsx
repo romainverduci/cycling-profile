@@ -5,8 +5,14 @@ import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { UserPage } from "./UserPage";
 import OAuth2Login from "react-simple-oauth2-login";
-import { useState } from "react";
-import { Button } from "@mui/material";
+import { useMemo, useState } from "react";
+import {
+  Button,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { Layout } from "./Layout";
 import { useTranslation } from "react-i18next";
 
@@ -50,33 +56,50 @@ function App() {
       .catch(setError);
   const onFailure = (response: any) => console.error(response);
 
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode]
+  );
+
   return (
     <>
-      {error && (
-        <div className="ErrorAlert">{error && (error as any).message}</div>
-      )}
-      {!user && (
-        <OAuth2Login
-          authorizationUrl={STRAVA_AUTHORIZATION_URL}
-          responseType="code"
-          clientId={STRAVA_CLIENT_ID || ""}
-          redirectUri={STRAVA_REDIRECT_URI}
-          scope="read"
-          onSuccess={(code: any) => onSuccess(code)}
-          onFailure={onFailure}
-          render={(props) => (
-            <Button onClick={props.onClick}>{t("connect-your-strava")}</Button>
-          )}
-        />
-      )}
+      <ThemeProvider theme={theme}>
+        <CssBaseline enableColorScheme />
+        {error && (
+          <div className="ErrorAlert">{error && (error as any).message}</div>
+        )}
+        {!user && (
+          <OAuth2Login
+            authorizationUrl={STRAVA_AUTHORIZATION_URL}
+            responseType="code"
+            clientId={STRAVA_CLIENT_ID || ""}
+            redirectUri={STRAVA_REDIRECT_URI}
+            scope="read"
+            onSuccess={(code: any) => onSuccess(code)}
+            onFailure={onFailure}
+            render={(props) => (
+              <Button onClick={props.onClick}>
+                {t("connect-your-strava")}
+              </Button>
+            )}
+          />
+        )}
 
-      {user && (
-        <QueryClientProvider client={queryClient}>
-          <Layout>
-            <UserPage athlete={user} />
-          </Layout>
-        </QueryClientProvider>
-      )}
+        {user && (
+          <QueryClientProvider client={queryClient}>
+            <Layout>
+              <UserPage athlete={user} />
+            </Layout>
+          </QueryClientProvider>
+        )}
+      </ThemeProvider>
     </>
   );
 }
