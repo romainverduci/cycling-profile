@@ -20,7 +20,7 @@ const STRAVA_REDIRECT_URI = import.meta.env.VITE_STRAVA_REDIRECT_URI
 interface StravaAuthContextType {
   loggedIn: boolean
   user?: Athlete
-  token?: string
+  tokenInfo?: string
 }
 
 export const StravaAuthContext = createContext<StravaAuthContextType>({
@@ -34,8 +34,11 @@ interface StravaAuthProviderProps {
 export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
   const { t } = useTranslation('common', { keyPrefix: 'login-page' })
 
-  const [user, setUser] = useLocalStorage('user', undefined)
-  const [token, setToken] = useLocalStorage('token', undefined)
+  const [user, setUser, unsetUser] = useLocalStorage('user', undefined)
+  const [tokenInfo, setTokenInfo, unsetTokenInfo] = useLocalStorage(
+    'tokenInfo',
+    undefined
+  )
   const [loggedIn, setLoggedIn] = useState(false)
   const [error, setError] = useState(null)
 
@@ -48,16 +51,30 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        const { athlete, ...tokenInfo } = data
+        setTokenInfo(tokenInfo)
+        setUser(athlete)
         setLoggedIn(true)
-        setToken(data.access_token)
-        setUser(data.athlete)
-        return data.access_token
       })
       .catch(setError)
+
   const onFailure = (response: any) => console.error(response)
 
+  const checkTokenExpiry = () => {
+    const expiresAt = new Date(tokenInfo?.expires_at)
+    const now = new Date()
+    // Strava tokens are valid for 6 hours, for security reason we ask the user to refresh his session after 1 hour
+    if (expiresAt > now) {
+      unsetUser()
+      unsetTokenInfo()
+      setLoggedIn(false)
+    }
+  }
+
   useEffect(() => {
-    setLoggedIn(user)
+    const isLoggedIn = !!user
+    setLoggedIn(isLoggedIn)
+    checkTokenExpiry()
   }, [user])
 
   if (error) {
@@ -82,7 +99,7 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
   }
 
   return (
-    <StravaAuthContext.Provider value={{ loggedIn, user, token }}>
+    <StravaAuthContext.Provider value={{ loggedIn, user, tokenInfo }}>
       {children}
     </StravaAuthContext.Provider>
   )

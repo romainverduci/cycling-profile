@@ -13,8 +13,8 @@ export const useLocalStorage = (
   const [value, setValue] = useState(() => getStorageValue(key, defaultValue))
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value))
+    value && localStorage.setItem(key, JSON.stringify(value))
   }, [key, value])
 
-  return [value, setValue]
+  return [value, setValue, () => localStorage.removeItem(key)]
 }
