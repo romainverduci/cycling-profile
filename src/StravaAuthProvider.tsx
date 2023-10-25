@@ -61,10 +61,9 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
   const onFailure = (response: any) => console.error(response)
 
   const checkTokenExpiry = () => {
-    const expiresAt = new Date(tokenInfo?.expires_at)
-    const now = new Date()
-    // Strava tokens are valid for 6 hours, for security reason we ask the user to refresh his session after 1 hour
-    if (expiresAt > now) {
+    const expiresAt = tokenInfo?.expires_at * 1000 // Strava token expires_at is in seconds
+    const now = new Date().getTime()
+    if (expiresAt < now) {
       unsetUser()
       unsetTokenInfo()
       setLoggedIn(false)
