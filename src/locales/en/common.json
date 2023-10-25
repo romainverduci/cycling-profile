@@ -5,6 +5,9 @@
     },
     "username": {
       "hi": "Hi {{name}} !"
+    },
+    "appbar": {
+      "logout": "logout"
     }
   }
 }

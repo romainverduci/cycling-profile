@@ -21,6 +21,7 @@ interface StravaAuthContextType {
   loggedIn: boolean
   user?: Athlete
   tokenInfo?: string
+  logout?: () => void
 }
 
 export const StravaAuthContext = createContext<StravaAuthContextType>({
@@ -64,10 +65,14 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
     const expiresAt = tokenInfo?.expires_at * 1000 // Strava token expires_at is in seconds
     const now = new Date().getTime()
     if (expiresAt < now) {
-      unsetUser()
-      unsetTokenInfo()
-      setLoggedIn(false)
+      logout()
     }
+  }
+
+  const logout = () => {
+    unsetUser()
+    unsetTokenInfo()
+    setLoggedIn(false)
   }
 
   useEffect(() => {
@@ -98,7 +103,7 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
   }
 
   return (
-    <StravaAuthContext.Provider value={{ loggedIn, user, tokenInfo }}>
+    <StravaAuthContext.Provider value={{ loggedIn, user, tokenInfo, logout }}>
       {children}
     </StravaAuthContext.Provider>
   )

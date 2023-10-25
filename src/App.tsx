@@ -15,18 +15,16 @@ function App() {
   })
 
   return (
-    <>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline enableColorScheme />
-        <StravaAuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <Layout>
-              <UserPage />
-            </Layout>
-          </QueryClientProvider>
-        </StravaAuthProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline enableColorScheme />
+      <StravaAuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <UserPage />
+          </Layout>
+        </QueryClientProvider>
+      </StravaAuthProvider>
+    </ThemeProvider>
   )
 }
 

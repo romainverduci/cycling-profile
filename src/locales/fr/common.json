@@ -5,6 +5,9 @@
     },
     "username": {
       "hi": "Salut {{name}} !"
+    },
+    "appbar": {
+      "logout": "Se déconnecter"
     }
   }
 }
