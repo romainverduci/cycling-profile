@@ -17,10 +17,18 @@ const STRAVA_CLIENT_SECRET = import.meta.env.VITE_STRAVA_CLIENT_SECRET
 const STRAVA_AUTHORIZATION_URL = import.meta.env.VITE_STRAVA_AUTHORIZATION_URL
 const STRAVA_REDIRECT_URI = import.meta.env.VITE_STRAVA_REDIRECT_URI
 
+interface TokenInfo {
+  access_token: string
+  expires_at: number
+  expires_in: number
+  refresh_token: string
+  token_type: 'Bearer'
+}
+
 interface StravaAuthContextType {
   loggedIn: boolean
   user?: Athlete
-  tokenInfo?: string
+  tokenInfo?: TokenInfo
   logout?: () => void
 }
 

@@ -8,6 +8,12 @@
     },
     "appbar": {
       "logout": "logout"
+    },
+    "athlete-stats": {
+      "title": "Your your in numbers",
+      "total-distance": "{{number}} km",
+      "total-elevation": "{{number}} m",
+      "total-time": "{{number}} h"
     }
   }
 }

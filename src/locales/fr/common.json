@@ -8,6 +8,12 @@
     },
     "appbar": {
       "logout": "Se déconnecter"
+    },
+    "athlete-stats": {
+      "title": "Ton année en chiffres",
+      "total-distance": "{{number}} km",
+      "total-elevation": "{{number}} m",
+      "total-time": "{{number}} h"
     }
   }
 }

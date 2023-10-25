@@ -1,9 +1,9 @@
 import './App.css'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { UserPage } from './UserPage'
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import { Layout } from './Layout'
 import { StravaAuthProvider } from './StravaAuthProvider'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 function App() {
   const queryClient = new QueryClient()
