@@ -1,17 +1,15 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
 name: Test and build
-
 on:
   push:
-    branches: ['main']
-
+    branches:
+      - main
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build
-        uses: docker://node:20.0-alpine3.17
+      - uses: cloudbees-io/checkout@v1
+        name: Checkout
+      - uses: docker://node:20.0-alpine3.17
+        name: Build
         run: npm install && npm build
-
