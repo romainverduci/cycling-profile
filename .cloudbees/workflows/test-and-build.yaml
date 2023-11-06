@@ -12,4 +12,4 @@ jobs:
         name: Checkout
       - uses: docker://node:20.0-alpine3.17
         name: Build
-        run: npm install && npm build
+        run: npm install && npm run build
