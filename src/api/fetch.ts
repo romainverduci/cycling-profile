@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const fetchData = async <T>(url: string, token: string, body?: any) => {
+export const fetchData = async <T>(
+  url: string,
+  token: string,
+  queryId?: string,
+  body?: any
+) => {
   const response = await fetch(`https://www.strava.com/api/v3${url}`, {
     method: 'GET',
     headers: {
@@ -8,5 +13,7 @@ export const fetchData = async <T>(url: string, token: string, body?: any) => {
     },
     body: JSON.stringify(body),
   })
-  return response.json() as T
+  return response
+    .json()
+    .then((data) => ({ response: data as T, queryId: queryId }))
 }

@@ -100,7 +100,7 @@ export const StravaAuthProvider = ({ children }: StravaAuthProviderProps) => {
         responseType="code"
         clientId={STRAVA_CLIENT_ID || ''}
         redirectUri={STRAVA_REDIRECT_URI}
-        scope="read"
+        scope="read,read_all,profile:read_all,activity:read_all"
         onSuccess={(code: any) => onSuccess(code)}
         onFailure={onFailure}
         render={(props) => (
