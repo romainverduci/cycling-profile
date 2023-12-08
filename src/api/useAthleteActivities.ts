@@ -11,25 +11,22 @@ interface AthleteActivitiesProps {
 }
 
 export const useAthleteActivities = ({
-  after,
   page = 1,
   perPage = 50,
   enabled = true,
 }: AthleteActivitiesProps) => {
   const { tokenInfo } = useStravaAuth()
 
-  const date = new Date()
-  date.setMonth(date.getMonth() - 1)
-  const oneMonthAgo = date.getTime() / 1000
-
-  const since = after ?? oneMonthAgo
+  /*   const date = new Date()
+  date.setMonth(date.getMonth() - 6)
+  const sixMonthsAgo = date.getTime() / 1000 */
 
   return useQuery({
     queryKey: ['athlete-activities', page, perPage],
     enabled: enabled,
     queryFn: () =>
       fetchData<ActivitiesSummary>(
-        `/athlete/activities?after=${since}&page=${page}&perPage=${perPage}`,
+        `/athlete/activities?page=${page}&per_page=${perPage}`,
         tokenInfo!.access_token
       ),
   })

@@ -2,8 +2,11 @@ import { Box, CircularProgress, Stack, Typography } from '@mui/material'
 import { useActivitiesPowerStream } from './api/useActivitiesPowerStream'
 import { useLocalStorage } from './useLocalStorage'
 import { extractCogganPowerData } from './extractCogganPowerData/extractCogganPowerData'
+import { useTranslation } from 'react-i18next'
 
 export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
+  const { t } = useTranslation('common', { keyPrefix: 'athlete-power-profile' })
+
   const [athletePowerData, setAthletePowerData] = useLocalStorage(
     'athletePowerData',
     {}
@@ -60,17 +63,51 @@ export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
     )
 
   return (
-    <Box>
-      <Typography>Best 1s:</Typography>
-      <Typography>{bestCogganLastMonth[1]}</Typography>
-      <Typography>Best 5s:</Typography>
-      <Typography>{bestCogganLastMonth[5]}</Typography>
-      <Typography>Best 1min:</Typography>
-      <Typography>{bestCogganLastMonth[60]}</Typography>
-      <Typography>Best 5min:</Typography>
-      <Typography>{bestCogganLastMonth[300]}</Typography>
-      <Typography>Best 20min:</Typography>
-      <Typography>{bestCogganLastMonth[1200]}</Typography>
-    </Box>
+    <>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-evenly"
+        sx={{ width: '50%', mx: 'auto', pt: 5 }}
+      >
+        <Box sx={{ width: 50 }}>
+          <Typography>1s</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>5s</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>1min</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>5min</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>20min</Typography>
+        </Box>
+      </Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-evenly"
+        sx={{ width: '50%', mx: 'auto' }}
+      >
+        <Box sx={{ width: 50 }}>
+          <Typography>{`${bestCogganLastMonth[1]}W`}</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>{`${bestCogganLastMonth[5]}W`}</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>{`${bestCogganLastMonth[60]}W`}</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>{`${bestCogganLastMonth[300]}W`}</Typography>
+        </Box>
+        <Box sx={{ width: 50 }}>
+          <Typography>{`${bestCogganLastMonth[1200]}W`}</Typography>
+        </Box>
+      </Stack>
+    </>
   )
 }
