@@ -2,11 +2,8 @@ import { Box, CircularProgress, Stack, Typography } from '@mui/material'
 import { useActivitiesPowerStream } from './api/useActivitiesPowerStream'
 import { useLocalStorage } from './useLocalStorage'
 import { extractCogganPowerData } from './extractCogganPowerData/extractCogganPowerData'
-import { useTranslation } from 'react-i18next'
 
 export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
-  const { t } = useTranslation('common', { keyPrefix: 'athlete-power-profile' })
-
   const [athletePowerData, setAthletePowerData] = useLocalStorage(
     'athletePowerData',
     {}
