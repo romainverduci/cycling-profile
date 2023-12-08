@@ -13,6 +13,7 @@ export const fetchData = async <T>(
     },
     body: JSON.stringify(body),
   })
+  // Add queryId to the response (this is done to add the activity id as Strava does not include it in the response when getting some activity data)
   return response
     .json()
     .then((data) => ({ response: data as T, queryId: queryId }))
