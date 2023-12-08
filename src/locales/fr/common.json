@@ -14,6 +14,9 @@
       "total-distance": "{{number}} km",
       "total-elevation": "{{number}} m",
       "total-time": "{{number}} h"
+    },
+    "athlete-power-profile": {
+      "title": "Tes meilleurs efforts récents"
     }
   }
 }

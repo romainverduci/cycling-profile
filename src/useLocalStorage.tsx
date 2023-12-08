@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-function getStorageValue(key: string, defaultValue: string | undefined) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getStorageValue(key: string, defaultValue?: any) {
   const saved = localStorage.getItem(key)
   const initial = saved && JSON.parse(saved)
   return initial || defaultValue
@@ -8,7 +9,8 @@ function getStorageValue(key: string, defaultValue: string | undefined) {
 
 export const useLocalStorage = (
   key: string,
-  defaultValue: string | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  defaultValue?: any
 ) => {
   const [value, setValue] = useState(() => getStorageValue(key, defaultValue))
 
