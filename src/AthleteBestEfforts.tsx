@@ -3,16 +3,16 @@ import { useActivitiesPowerStream } from './api/useActivitiesPowerStream'
 import { useLocalStorage } from './useLocalStorage'
 import { extractCogganPowerData } from './extractCogganPowerData/extractCogganPowerData'
 
-export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
+export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
   const [athletePowerData, setAthletePowerData] = useLocalStorage(
     'athletePowerData',
     {}
   )
 
+  // Only get power streams for activities that are not stored in local storage
   const newIds = ids.filter(
     (id) => !Object.keys(athletePowerData).includes(`${id}`)
   )
-
   const results = useActivitiesPowerStream({ activitiesIds: newIds })
 
   if (results.some((r) => r.isLoading))
@@ -36,7 +36,7 @@ export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
       })
   })
 
-  const bestCogganLastMonth = Object.keys(athletePowerData)
+  const bestEfforts = Object.keys(athletePowerData)
     .map((activityId) => extractCogganPowerData([athletePowerData[activityId]]))
     .reduce(
       (acc, current) => {
@@ -90,19 +90,19 @@ export const ActivitiesPowerStream = ({ ids }: { ids: number[] }) => {
         sx={{ width: '50%', mx: 'auto' }}
       >
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestCogganLastMonth[1]}W`}</Typography>
+          <Typography>{`${bestEfforts[1]} W`}</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestCogganLastMonth[5]}W`}</Typography>
+          <Typography>{`${bestEfforts[5]} W`}</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestCogganLastMonth[60]}W`}</Typography>
+          <Typography>{`${bestEfforts[60]} W`}</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestCogganLastMonth[300]}W`}</Typography>
+          <Typography>{`${bestEfforts[300]} W`}</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestCogganLastMonth[1200]}W`}</Typography>
+          <Typography>{`${bestEfforts[1200]} W`}</Typography>
         </Box>
       </Stack>
     </>

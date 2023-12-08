@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Stack from '@mui/material/Stack'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useAthleteActivities } from './api/useAthleteActivities'
-import { ActivitiesPowerStream } from './ActivitiesPowerStream'
+import { AthleteBestEfforts } from './AthleteBestEfforts'
 import Typography from '@mui/material/Typography'
 
 interface AthletePowerProfileProps {
@@ -44,7 +44,7 @@ export const AthletePowerProfile = ({ sx }: AthletePowerProfileProps) => {
     <Box sx={sx}>
       <Typography variant="h3">{t('title')}</Typography>
 
-      <ActivitiesPowerStream ids={allBikeActivitiesIds}></ActivitiesPowerStream>
+      <AthleteBestEfforts ids={allBikeActivitiesIds}></AthleteBestEfforts>
     </Box>
   )
 }
