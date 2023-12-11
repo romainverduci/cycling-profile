@@ -2,8 +2,28 @@ import { Box, CircularProgress, Stack, Typography } from '@mui/material'
 import { useActivitiesPowerStream } from './api/useActivitiesPowerStream'
 import { useLocalStorage } from './useLocalStorage'
 import { extractCogganPowerData } from './extractCogganPowerData/extractCogganPowerData'
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Tick,
+} from 'chart.js'
+import { PolarArea } from 'react-chartjs-2'
+import { useStravaAuth } from './StravaAuthProvider'
+
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend)
+
+const worldBestEffortsInWKg = {
+  5: 24,
+  60: 11.5,
+  300: 7.6,
+  1200: 6.4,
+}
 
 export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
+  const { user } = useStravaAuth()
   const [athletePowerData, setAthletePowerData] = useLocalStorage(
     'athletePowerData',
     {}
@@ -59,6 +79,48 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
       { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
     )
 
+  const data = {
+    labels: ['5s', '1min', '5min', '20min'],
+
+    datasets: [
+      {
+        label: 'Performance index',
+
+        data: [
+          +(
+            (bestEfforts[5] / (user?.weight || 1) / worldBestEffortsInWKg[5]) *
+            100
+          ).toFixed(1),
+          +(
+            (bestEfforts[60] /
+              (user?.weight || 1) /
+              worldBestEffortsInWKg[60]) *
+            100
+          ).toFixed(1),
+          +(
+            (bestEfforts[300] /
+              (user?.weight || 1) /
+              worldBestEffortsInWKg[300]) *
+            100
+          ).toFixed(1),
+          +(
+            (bestEfforts[1200] /
+              (user?.weight || 1) /
+              worldBestEffortsInWKg[1200]) *
+            100
+          ).toFixed(1),
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
   return (
     <>
       <Stack
@@ -105,6 +167,43 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
           <Typography>{`${bestEfforts[1200]} W`}</Typography>
         </Box>
       </Stack>
+      <Box width="100%" height="500px">
+        <PolarArea
+          width="500px"
+          height="500px"
+          data={data}
+          options={{
+            animation: { animateRotate: false, animateScale: true },
+            plugins: { legend: { position: 'left' } },
+            scales: {
+              r: {
+                min: 0,
+                suggestedMax: 80,
+                ticks: {
+                  z: 1,
+                  stepSize: 20,
+                  callback: tickLabel,
+                  backdropPadding: 5,
+                  font: { size: 14 },
+                  major: { enabled: true },
+                },
+                grid: { color: 'grey' },
+              },
+            },
+          }}
+          style={{ marginLeft: 'auto', marginRight: 'auto' }}
+        />
+      </Box>
     </>
   )
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const tickLabel = (value: number | string, _index: number, _ticks: Tick[]) => {
+  const valueAsNumber = +value
+  if (valueAsNumber <= 50) return 'poor'
+  if (valueAsNumber > 50 && valueAsNumber <= 60) return 'fair'
+  if (valueAsNumber > 60 && valueAsNumber <= 70) return 'good'
+  if (valueAsNumber > 70 && valueAsNumber <= 80) return 'very good'
+  if (valueAsNumber > 80) return 'exceptionnal'
 }
