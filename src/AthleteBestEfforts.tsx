@@ -201,9 +201,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const tickLabel = (value: number | string, _index: number, _ticks: Tick[]) => {
   const valueAsNumber = +value
-  if (valueAsNumber <= 50) return 'poor'
-  if (valueAsNumber > 50 && valueAsNumber <= 60) return 'fair'
-  if (valueAsNumber > 60 && valueAsNumber <= 70) return 'good'
+  if (valueAsNumber < 40) return 'poor'
+  if (valueAsNumber >= 40 && valueAsNumber < 60) return 'fair'
+  if (valueAsNumber >= 60 && valueAsNumber < 70) return 'good'
   if (valueAsNumber > 70 && valueAsNumber <= 80) return 'very good'
   if (valueAsNumber > 80) return 'exceptionnal'
 }
