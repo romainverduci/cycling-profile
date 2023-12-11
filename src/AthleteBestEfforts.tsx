@@ -130,9 +130,6 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         sx={{ width: '50%', mx: 'auto', pt: 5 }}
       >
         <Box sx={{ width: 50 }}>
-          <Typography>1s</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
           <Typography>5s</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
@@ -152,9 +149,6 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         sx={{ width: '50%', mx: 'auto' }}
       >
         <Box sx={{ width: 50 }}>
-          <Typography>{`${bestEfforts[1]} W`}</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
           <Typography>{`${bestEfforts[5]} W`}</Typography>
         </Box>
         <Box sx={{ width: 50 }}>
@@ -167,14 +161,14 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
           <Typography>{`${bestEfforts[1200]} W`}</Typography>
         </Box>
       </Stack>
-      <Box width="100%" height="500px">
+      <Box width="100%" height="500px" sx={{ mt: 2 }}>
         <PolarArea
           width="500px"
           height="500px"
           data={data}
           options={{
             animation: { animateRotate: false, animateScale: true },
-            plugins: { legend: { position: 'left' } },
+            plugins: { legend: { position: 'bottom' } },
             scales: {
               r: {
                 min: 0,
@@ -201,9 +195,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const tickLabel = (value: number | string, _index: number, _ticks: Tick[]) => {
   const valueAsNumber = +value
-  if (valueAsNumber < 40) return 'poor'
+  if (valueAsNumber < 40) return 'modest'
   if (valueAsNumber >= 40 && valueAsNumber < 60) return 'fair'
   if (valueAsNumber >= 60 && valueAsNumber < 70) return 'good'
   if (valueAsNumber > 70 && valueAsNumber <= 80) return 'very good'
-  if (valueAsNumber > 80) return 'exceptionnal'
+  if (valueAsNumber > 80) return 'exceptional'
 }
