@@ -16,10 +16,9 @@ export const UserPage = () => {
         src={athlete?.profile}
       />
       <UserName sx={{ pt: 3 }} athlete={athlete!} />
+      <AthletePowerProfile sx={{ mt: 14, width: '100%' }} />
       <Divider sx={{ py: 5 }} />
       <AthleteYearlyStats sx={{ mt: 14, width: '100%' }} />
-      <Divider sx={{ py: 5 }} />
-      <AthletePowerProfile sx={{ mt: 14, width: '100%' }} />
     </Box>
   )
 }
