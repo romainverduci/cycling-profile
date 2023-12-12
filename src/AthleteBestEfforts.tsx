@@ -79,11 +79,11 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
     )
 
   const bestEffortsInWKg = {
-    1: bestEfforts[1] / (user?.weight || 1),
-    5: bestEfforts[5] / (user?.weight || 1),
-    60: bestEfforts[60] / (user?.weight || 1),
-    300: bestEfforts[300] / (user?.weight || 1),
-    1200: bestEfforts[1200] / (user?.weight || 1),
+    1: +(bestEfforts[1] / (user?.weight || 1)).toFixed(1),
+    5: +(bestEfforts[5] / (user?.weight || 1)).toFixed(1),
+    60: +(bestEfforts[60] / (user?.weight || 1)).toFixed(1),
+    300: +(bestEfforts[300] / (user?.weight || 1)).toFixed(1),
+    1200: +(bestEfforts[1200] / (user?.weight || 1)).toFixed(1),
   }
 
   const data = {
@@ -139,7 +139,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
               >{`${bestEfforts[1200]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${worldBestEffortsInWKg[1200]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[1200]} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -151,7 +151,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
               >{`${bestEfforts[300]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${worldBestEffortsInWKg[300]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[300]} w/kg`}</Typography>
             </Box>
           </Box>
         </Box>
@@ -192,7 +192,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
               >{`${bestEfforts[5]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${worldBestEffortsInWKg[5]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[5]} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -204,7 +204,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
               >{`${bestEfforts[60]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${worldBestEffortsInWKg[60]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[60]} w/kg`}</Typography>
             </Box>
           </Box>
         </Box>
