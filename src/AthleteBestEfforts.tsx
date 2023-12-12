@@ -7,13 +7,12 @@ import {
   RadialLinearScale,
   ArcElement,
   Tooltip,
-  Legend,
   Tick,
 } from 'chart.js'
 import { PolarArea } from 'react-chartjs-2'
 import { useStravaAuth } from './StravaAuthProvider'
 
-ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend)
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip)
 
 const worldBestEffortsInWKg = {
   5: 24,
@@ -123,70 +122,83 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
 
   return (
     <>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-evenly"
-        sx={{ width: '50%', mx: 'auto', pt: 5 }}
+      <Box
+        width="100%"
+        height="500px"
+        sx={{
+          mt: 2,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
       >
-        <Box sx={{ width: 50 }}>
-          <Typography>5s</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ flexGrow: 1, display: 'flex' }}>
+            <Box sx={{ my: 'auto' }}>
+              <Typography variant="h6">20min</Typography>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 'bold' }}
+              >{`${bestEfforts[1200]} W`}</Typography>
+            </Box>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex' }}>
+            <Box sx={{ my: 'auto' }}>
+              <Typography variant="h6">5min</Typography>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 'bold' }}
+              >{`${bestEfforts[300]} W`}</Typography>
+            </Box>
+          </Box>
         </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>1min</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>5min</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>20min</Typography>
-        </Box>
-      </Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-evenly"
-        sx={{ width: '50%', mx: 'auto' }}
-      >
-        <Box sx={{ width: 50 }}>
-          <Typography>{`${bestEfforts[5]} W`}</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>{`${bestEfforts[60]} W`}</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>{`${bestEfforts[300]} W`}</Typography>
-        </Box>
-        <Box sx={{ width: 50 }}>
-          <Typography>{`${bestEfforts[1200]} W`}</Typography>
-        </Box>
-      </Stack>
-      <Box width="100%" height="500px" sx={{ mt: 2 }}>
-        <PolarArea
-          width="500px"
-          height="500px"
-          data={data}
-          options={{
-            animation: { animateRotate: false, animateScale: true },
-            plugins: { legend: { position: 'bottom' } },
-            scales: {
-              r: {
-                min: 0,
-                suggestedMax: 80,
-                ticks: {
-                  z: 1,
-                  stepSize: 20,
-                  callback: tickLabel,
-                  backdropPadding: 5,
-                  font: { size: 14 },
-                  major: { enabled: true },
+        <Box>
+          <PolarArea
+            width="500px"
+            height="500px"
+            data={data}
+            options={{
+              animation: { animateRotate: false, animateScale: true },
+              plugins: { legend: { position: 'bottom' } },
+              scales: {
+                r: {
+                  min: 0,
+                  suggestedMax: 80,
+                  ticks: {
+                    z: 1,
+                    stepSize: 20,
+                    callback: tickLabel,
+                    backdropPadding: 5,
+                    font: { size: 14 },
+                    major: { enabled: true },
+                  },
+                  grid: { color: 'grey' },
                 },
-                grid: { color: 'grey' },
               },
-            },
-          }}
-          style={{ marginLeft: 'auto', marginRight: 'auto' }}
-        />
+            }}
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ flexGrow: 1, display: 'flex' }}>
+            <Box sx={{ my: 'auto' }}>
+              <Typography variant="h6">5s</Typography>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 'bold' }}
+              >{`${bestEfforts[5]} W`}</Typography>
+            </Box>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex' }}>
+            <Box sx={{ my: 'auto' }}>
+              <Typography variant="h6">1min</Typography>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 'bold' }}
+              >{`${bestEfforts[60]} W`}</Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </>
   )
