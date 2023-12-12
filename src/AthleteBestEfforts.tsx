@@ -78,6 +78,14 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
       { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
     )
 
+  const bestEffortsInWKg = {
+    1: bestEfforts[1] / (user?.weight || 1),
+    5: bestEfforts[5] / (user?.weight || 1),
+    60: bestEfforts[60] / (user?.weight || 1),
+    300: bestEfforts[300] / (user?.weight || 1),
+    1200: bestEfforts[1200] / (user?.weight || 1),
+  }
+
   const data = {
     labels: ['5s', '1min', '5min', '20min'],
 
@@ -86,26 +94,15 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         label: 'Performance index',
 
         data: [
+          +((bestEffortsInWKg[5] / worldBestEffortsInWKg[5]) * 100).toFixed(1),
+          +((bestEffortsInWKg[60] / worldBestEffortsInWKg[60]) * 100).toFixed(
+            1
+          ),
+          +((bestEffortsInWKg[300] / worldBestEffortsInWKg[300]) * 100).toFixed(
+            1
+          ),
           +(
-            (bestEfforts[5] / (user?.weight || 1) / worldBestEffortsInWKg[5]) *
-            100
-          ).toFixed(1),
-          +(
-            (bestEfforts[60] /
-              (user?.weight || 1) /
-              worldBestEffortsInWKg[60]) *
-            100
-          ).toFixed(1),
-          +(
-            (bestEfforts[300] /
-              (user?.weight || 1) /
-              worldBestEffortsInWKg[300]) *
-            100
-          ).toFixed(1),
-          +(
-            (bestEfforts[1200] /
-              (user?.weight || 1) /
-              worldBestEffortsInWKg[1200]) *
+            (bestEffortsInWKg[1200] / worldBestEffortsInWKg[1200]) *
             100
           ).toFixed(1),
         ],
@@ -140,6 +137,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
               >{`${bestEfforts[1200]} W`}</Typography>
+              <Typography
+                sx={{ fontWeight: 'bold' }}
+              >{`${worldBestEffortsInWKg[1200]} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -149,6 +149,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
               >{`${bestEfforts[300]} W`}</Typography>
+              <Typography
+                sx={{ fontWeight: 'bold' }}
+              >{`${worldBestEffortsInWKg[300]} w/kg`}</Typography>
             </Box>
           </Box>
         </Box>
@@ -187,6 +190,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
               >{`${bestEfforts[5]} W`}</Typography>
+              <Typography
+                sx={{ fontWeight: 'bold' }}
+              >{`${worldBestEffortsInWKg[5]} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -196,6 +202,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
               >{`${bestEfforts[60]} W`}</Typography>
+              <Typography
+                sx={{ fontWeight: 'bold' }}
+              >{`${worldBestEffortsInWKg[60]} w/kg`}</Typography>
             </Box>
           </Box>
         </Box>
