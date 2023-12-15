@@ -91,7 +91,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
           5: fiveSecondsBest,
           60: OneMinuteBest,
           300: fiveMinutesBest,
-          1200: twentyMinutesBest * 0.95,
+          1200: +(twentyMinutesBest * 0.95).toFixed(1),
         }
       },
       { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
