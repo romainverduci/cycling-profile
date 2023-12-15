@@ -91,7 +91,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
           5: fiveSecondsBest,
           60: OneMinuteBest,
           300: fiveMinutesBest,
-          1200: twentyMinutesBest,
+          1200: twentyMinutesBest * 0.95,
         }
       },
       { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
@@ -158,7 +158,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
             <Box sx={{ ml: 'auto', mr: '100px' }}>
-              <Typography variant="h6">20min</Typography>
+              <Typography variant="h6">FTP</Typography>
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
@@ -211,7 +211,7 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
             <Box sx={{ ml: 'auto', mr: '100px' }}>
-              <Typography variant="h6">5min</Typography>
+              <Typography variant="h6">{t('map')}</Typography>
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
