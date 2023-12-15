@@ -1,6 +1,11 @@
 import './App.css'
 import { UserPage } from './UserPage'
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  responsiveFontSizes,
+} from '@mui/material'
 import { Layout } from './Layout'
 import { StravaAuthProvider } from './StravaAuthProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -25,11 +30,12 @@ function App() {
     persister: localStoragePersister,
   })
 
-  const darkTheme = createTheme({
+  let darkTheme = createTheme({
     palette: {
       mode: 'dark',
     },
   })
+  darkTheme = responsiveFontSizes(darkTheme)
 
   return (
     <ThemeProvider theme={darkTheme}>

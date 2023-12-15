@@ -10,7 +10,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <Container sx={{ minHeight: '100vh' }}>
       <AppBar />
-      <Box sx={{ p: 8 }}>{children}</Box>
+      <Box sx={{ pt: 8 }}>{children}</Box>
     </Container>
   )
 }

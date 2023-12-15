@@ -121,17 +121,16 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
     <>
       <Box
         width="100%"
-        height="500px"
         sx={{
           mt: 2,
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           justifyContent: 'center',
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex' }}>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
-            <Box sx={{ my: 'auto' }}>
+            <Box sx={{ ml: 'auto', mr: '100px' }}>
               <Typography variant="h6">20min</Typography>
               <Typography
                 variant="h5"
@@ -144,21 +143,21 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
             <Box sx={{ my: 'auto' }}>
-              <Typography variant="h6">5min</Typography>
+              <Typography variant="h6">5s</Typography>
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEfforts[300]} W`}</Typography>
+              >{`${bestEfforts[5]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEffortsInWKg[300]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[5]} w/kg`}</Typography>
             </Box>
           </Box>
         </Box>
-        <Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PolarArea
-            width="500px"
-            height="500px"
+            width="390px"
+            height="390px"
             data={data}
             options={{
               animation: { animateRotate: false, animateScale: true },
@@ -182,22 +181,22 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           />
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex' }}>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
-            <Box sx={{ my: 'auto' }}>
-              <Typography variant="h6">5s</Typography>
+            <Box sx={{ ml: 'auto', mr: '100px' }}>
+              <Typography variant="h6">5min</Typography>
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEfforts[5]} W`}</Typography>
+              >{`${bestEfforts[300]} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEffortsInWKg[5]} w/kg`}</Typography>
+              >{`${bestEffortsInWKg[300]} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
             <Box sx={{ my: 'auto' }}>
-              <Typography variant="h6">1min</Typography>
+              <Typography variant="h6">60s</Typography>
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
