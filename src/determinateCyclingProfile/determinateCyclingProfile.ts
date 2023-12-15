@@ -5,6 +5,13 @@ export enum CYCLING_PROFILE {
   PUNCHER = 'puncher',
 }
 
+interface Scores {
+  sprinter: number
+  puncher: number
+  'time-trialist': number
+  'all-rounder': number
+}
+
 interface PowerProfile {
   5: number
   60: number
@@ -14,7 +21,7 @@ interface PowerProfile {
 
 export const determinateCyclingProfile = (powerProfile: PowerProfile) => {
   // Calculate scores for each category based on the most important power duration
-  const scores = {
+  const scores: Scores = {
     sprinter: powerProfile[5],
     puncher: (powerProfile[60] + powerProfile[300]) / 2,
     'time-trialist': powerProfile[1200],
@@ -28,7 +35,7 @@ export const determinateCyclingProfile = (powerProfile: PowerProfile) => {
 
   // Trouver le profil le plus élevé
   const categorieMax = Object.keys(scores).reduce((a, b) =>
-    scores[a] > scores[b] ? a : b
+    scores[a as keyof Scores] > scores[b as keyof Scores] ? a : b
   )
 
   return categorieMax
