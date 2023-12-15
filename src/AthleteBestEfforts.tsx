@@ -11,6 +11,8 @@ import {
 } from 'chart.js'
 import { PolarArea } from 'react-chartjs-2'
 import { useStravaAuth } from './StravaAuthProvider'
+import { useTranslation } from 'react-i18next'
+import { determinateCyclingProfile } from './determinateCyclingProfile/determinateCyclingProfile'
 
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip)
 
@@ -22,6 +24,8 @@ const worldBestEffortsInWKg = {
 }
 
 export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
+  const { t } = useTranslation('common', { keyPrefix: 'athlete-power-profile' })
+
   const { user } = useStravaAuth()
   const [athletePowerData, setAthletePowerData] = useLocalStorage(
     'athletePowerData',
@@ -55,6 +59,21 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
       })
   })
 
+  const tickLabel = (
+    value: number | string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _index: number,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _ticks: Tick[]
+  ) => {
+    const valueAsNumber = +value
+    if (valueAsNumber < 40) return t('modest')
+    if (valueAsNumber >= 40 && valueAsNumber < 60) return t('fair')
+    if (valueAsNumber >= 60 && valueAsNumber < 70) return t('good')
+    if (valueAsNumber > 70 && valueAsNumber <= 80) return t('very-good')
+    if (valueAsNumber > 80) return t('exceptional')
+  }
+
   const bestEfforts = Object.keys(athletePowerData)
     .map((activityId) => extractCogganPowerData([athletePowerData[activityId]]))
     .reduce(
@@ -79,11 +98,22 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
     )
 
   const bestEffortsInWKg = {
-    1: +(bestEfforts[1] / (user?.weight || 1)).toFixed(1),
     5: +(bestEfforts[5] / (user?.weight || 1)).toFixed(1),
     60: +(bestEfforts[60] / (user?.weight || 1)).toFixed(1),
     300: +(bestEfforts[300] / (user?.weight || 1)).toFixed(1),
     1200: +(bestEfforts[1200] / (user?.weight || 1)).toFixed(1),
+  }
+
+  const performanceIndex = {
+    5: +((bestEffortsInWKg[5] / worldBestEffortsInWKg[5]) * 100).toFixed(1),
+    60: +((bestEffortsInWKg[60] / worldBestEffortsInWKg[60]) * 100).toFixed(1),
+    300: +((bestEffortsInWKg[300] / worldBestEffortsInWKg[300]) * 100).toFixed(
+      1
+    ),
+    1200: +(
+      (bestEffortsInWKg[1200] / worldBestEffortsInWKg[1200]) *
+      100
+    ).toFixed(1),
   }
 
   const data = {
@@ -94,17 +124,10 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
         label: 'Performance index',
 
         data: [
-          +((bestEffortsInWKg[5] / worldBestEffortsInWKg[5]) * 100).toFixed(1),
-          +((bestEffortsInWKg[60] / worldBestEffortsInWKg[60]) * 100).toFixed(
-            1
-          ),
-          +((bestEffortsInWKg[300] / worldBestEffortsInWKg[300]) * 100).toFixed(
-            1
-          ),
-          +(
-            (bestEffortsInWKg[1200] / worldBestEffortsInWKg[1200]) *
-            100
-          ).toFixed(1),
+          performanceIndex[5],
+          performanceIndex[60],
+          performanceIndex[300],
+          performanceIndex[1200],
         ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
@@ -119,6 +142,10 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
 
   return (
     <>
+      <Typography variant="h3">{t('title')}</Typography>
+      <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+        {t(`cycling-profile.${determinateCyclingProfile(performanceIndex)}`)}
+      </Typography>
       <Box
         width="100%"
         sx={{
@@ -210,14 +237,4 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
       </Box>
     </>
   )
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const tickLabel = (value: number | string, _index: number, _ticks: Tick[]) => {
-  const valueAsNumber = +value
-  if (valueAsNumber < 40) return 'modest'
-  if (valueAsNumber >= 40 && valueAsNumber < 60) return 'fair'
-  if (valueAsNumber >= 60 && valueAsNumber < 70) return 'good'
-  if (valueAsNumber > 70 && valueAsNumber <= 80) return 'very good'
-  if (valueAsNumber > 80) return 'exceptional'
 }

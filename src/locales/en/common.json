@@ -16,7 +16,18 @@
       "total-time": "{{number}} h"
     },
     "athlete-power-profile": {
-      "title": "Watts spoke, you are a"
+      "title": "Watts spoke, you are a",
+      "modest": "modest",
+      "fair": "fair",
+      "good": "good",
+      "very-good": "very good",
+      "exceptional": "exceptional",
+      "cycling-profile": {
+        "sprinter": "sprinter",
+        "puncher": "puncher",
+        "time-trialist": "time trialist / climber",
+        "all-rounder": "all rounder"
+      }
     }
   }
 }

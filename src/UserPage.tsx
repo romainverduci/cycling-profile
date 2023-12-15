@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider'
 export const UserPage = () => {
   const { user: athlete } = useStravaAuth()
   return (
-    <Stack spacing={5}>
+    <Stack spacing={7}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Avatar
           sx={{ width: 125, height: 125, alignSelf: 'center' }}

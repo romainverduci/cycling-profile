@@ -16,7 +16,18 @@
       "total-time": "{{number}} h"
     },
     "athlete-power-profile": {
-      "title": "Les watts ont parlé, tu es un"
+      "title": "Les watts ont parlé, tu es un",
+      "modest": "médiocre",
+      "fair": "moyen",
+      "good": "bon",
+      "very-good": "très bon",
+      "exceptional": "exceptionnel",
+      "cycling-profile": {
+        "sprinter": "sprinteur",
+        "puncher": "puncheur",
+        "time-trialist": "rouleur / grimpeur",
+        "all-rounder": "polyvalent"
+      }
     }
   }
 }

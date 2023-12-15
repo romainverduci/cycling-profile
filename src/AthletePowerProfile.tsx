@@ -42,11 +42,6 @@ export const AthletePowerProfile = ({ sx }: AthletePowerProfileProps) => {
 
   return (
     <Box sx={sx}>
-      <Typography variant="h3">{t('title')}</Typography>
-      <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-        {'Grimpeur'}
-      </Typography>
-
       <AthleteBestEfforts ids={allBikeActivitiesIds}></AthleteBestEfforts>
     </Box>
   )
