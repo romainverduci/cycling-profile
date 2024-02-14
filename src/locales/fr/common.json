@@ -1,7 +1,8 @@
 {
   "common": {
     "login-page": {
-      "connect-your-strava": "Connecte ton Strava"
+      "connect-your-strava": "Connecte ton Strava",
+      "connect-your-wahoo": "Connecte ton Wahoo"
     },
     "username": {
       "hi": "Salut {{name}} !"

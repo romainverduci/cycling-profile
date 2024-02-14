@@ -18,11 +18,11 @@ export const useActivitiesPowerStream = ({
       activitiesIds.map((id) => ({
         queryKey: ['activityPowerStreams', id],
         queryFn: () =>
-          fetchData<StreamSet>(
-            `/activities/${id}/streams?keys=watts`,
-            tokenInfo!.access_token,
-            `${id}`
-          ),
+          fetchData<StreamSet>({
+            url: `/activities/${id}/streams?keys=watts`,
+            token: tokenInfo!.access_token,
+            queryId: `${id}`,
+          }),
         staleTime: Infinity,
       })),
     [activitiesIds, tokenInfo]

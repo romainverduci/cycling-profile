@@ -1,15 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const fetchData = async <T>(
-  url: string,
-  token: string,
-  queryId?: string,
+interface FetchDataProps {
+  url: string
+  token: string
+  provider?: 'wahoo'
+  queryId?: string
   body?: any
-) => {
-  const response = await fetch(`https://www.strava.com/api/v3${url}`, {
+}
+
+export const fetchData = async <T>({
+  url,
+  token,
+  provider,
+  queryId,
+  body,
+}: FetchDataProps) => {
+  const baseUri =
+    provider === 'wahoo' ? 'api.wahooligan.com/v1' : '/www.strava.com/api/v3'
+
+  const response = await fetch(`https://${baseUri}${url}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Authorization: Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })

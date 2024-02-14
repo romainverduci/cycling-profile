@@ -11,6 +11,7 @@ import { StravaAuthProvider } from './StravaAuthProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { persistQueryClient } from '@tanstack/react-query-persist-client'
+import { WahooAuthProvider } from './WahooAuthProvider'
 
 function App() {
   const queryClient = new QueryClient({
@@ -40,13 +41,13 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline enableColorScheme />
-      <StravaAuthProvider>
+      <WahooAuthProvider>
         <QueryClientProvider client={queryClient}>
           <Layout>
             <UserPage />
           </Layout>
         </QueryClientProvider>
-      </StravaAuthProvider>
+      </WahooAuthProvider>
     </ThemeProvider>
   )
 }

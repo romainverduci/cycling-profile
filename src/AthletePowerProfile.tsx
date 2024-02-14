@@ -13,6 +13,7 @@ export const AthletePowerProfile = ({ sx }: AthletePowerProfileProps) => {
   const { data: athleteActivitiesPage1, isLoading } = useAthleteActivities({
     perPage: 50,
     page: 1,
+    provider: 'wahoo',
   })
 
   if (isLoading)

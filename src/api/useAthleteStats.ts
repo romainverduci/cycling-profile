@@ -9,6 +9,9 @@ export const useAthleteStats = ({ id }: { id: string }) => {
   return useQuery({
     queryKey: ['athlete-stats', id],
     queryFn: () =>
-      fetchData<AthleteStats>(`/athletes/${id}/stats`, tokenInfo!.access_token),
+      fetchData<AthleteStats>({
+        url: `/athletes/${id}/stats`,
+        token: tokenInfo!.access_token,
+      }),
   })
 }
