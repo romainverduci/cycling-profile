@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Box, CircularProgress, Stack, Typography } from '@mui/material'
 import { useActivitiesPowerStream } from './api/useActivitiesPowerStream'
 import { useLocalStorage } from './useLocalStorage'
@@ -74,28 +75,33 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
     if (valueAsNumber > 80) return t('exceptional')
   }
 
-  const bestEfforts = Object.keys(athletePowerData)
-    .map((activityId) => extractCogganPowerData([athletePowerData[activityId]]))
-    .reduce(
-      (acc, current) => {
-        const oneSecondBest = acc[1] > current[1] ? acc[1] : current[1]
-        const fiveSecondsBest = acc[5] > current[5] ? acc[5] : current[5]
-        const OneMinuteBest = acc[60] > current[60] ? acc[60] : current[60]
-        const fiveMinutesBest =
-          acc[300] > current[300] ? acc[300] : current[300]
-        const twentyMinutesBest =
-          acc[1200] > current[1200] ? acc[1200] : current[1200]
+  const bestEfforts = useMemo(() => {
+    const bestEfforts = Object.keys(athletePowerData)
+      .map((activityId) =>
+        extractCogganPowerData([athletePowerData[activityId]])
+      )
+      .reduce(
+        (acc, current) => {
+          const oneSecondBest = acc[1] > current[1] ? acc[1] : current[1]
+          const fiveSecondsBest = acc[5] > current[5] ? acc[5] : current[5]
+          const OneMinuteBest = acc[60] > current[60] ? acc[60] : current[60]
+          const fiveMinutesBest =
+            acc[300] > current[300] ? acc[300] : current[300]
+          const twentyMinutesBest =
+            acc[1200] > current[1200] ? acc[1200] : current[1200]
 
-        return {
-          1: oneSecondBest,
-          5: fiveSecondsBest,
-          60: OneMinuteBest,
-          300: fiveMinutesBest,
-          1200: +(twentyMinutesBest * 0.95).toFixed(1),
-        }
-      },
-      { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
-    )
+          return {
+            1: oneSecondBest,
+            5: fiveSecondsBest,
+            60: OneMinuteBest,
+            300: fiveMinutesBest,
+            1200: twentyMinutesBest,
+          }
+        },
+        { 1: 0, 5: 0, 60: 0, 300: 0, 1200: 0 }
+      )
+    return bestEfforts
+  }, [athletePowerData])
 
   const bestEffortsInWKg = {
     5: +(bestEfforts[5] / (user?.weight || 1)).toFixed(1),
@@ -115,6 +121,9 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
       100
     ).toFixed(1),
   }
+
+  const ftp = +(bestEfforts[1200] * 0.95).toFixed(1)
+  const ftpInWKg = +(ftp / (user?.weight || 1)).toFixed(1)
 
   const data = {
     labels: ['5s', '1min', '5min', '20min'],
@@ -162,10 +171,10 @@ export const AthleteBestEfforts = ({ ids }: { ids: number[] }) => {
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEfforts[1200]} W`}</Typography>
+              >{`${ftp} W`}</Typography>
               <Typography
                 sx={{ fontWeight: 'bold' }}
-              >{`${bestEffortsInWKg[1200]} w/kg`}</Typography>
+              >{`${ftpInWKg} w/kg`}</Typography>
             </Box>
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
